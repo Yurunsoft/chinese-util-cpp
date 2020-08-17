@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Release -D WITH_PHP=1 && \
+cmake --build build --target install -j

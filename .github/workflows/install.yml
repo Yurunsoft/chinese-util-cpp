@@ -1,0 +1,24 @@
+name: Install
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  CTEST_OUTPUT_ON_FAILURE: 1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: build and install library
+        run: |
+          cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Release
+          sudo cmake --build build --target install --config Release -j

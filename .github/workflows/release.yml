@@ -1,0 +1,180 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-windows-x86:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: install php
+        run: |
+          .\.github/workflows/bin/install-php7.4-win-x86.ps1
+
+      - name: build and install library with php
+        run: |
+          $phpDevPath=$([environment]::GetEnvironmentvariable("PHP_DEV_PATH", "Machine"))
+          cmake -H"." -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_GENERATOR_PLATFORM=Win32 -DWITH_PHP=1 -DPHP_INCLUDE_DIR="$phpDevPath\include" -DPHP_LIB_DIR="$phpDevPath\lib"
+          cmake --build build --target install --config Release -j
+
+      - name: php test
+        run: |
+          [environment]::SetEnvironmentvariable("PATH", $([environment]::GetEnvironmentvariable("PATH", "Machine")))
+          cd phptest
+          composer update
+          phpunit
+          cd ../
+
+      - name: Deploy Windows x86 release
+        uses: WebFreak001/upload-asset@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: build/Release/chinese_util.dll
+          mime: application/octet-stream
+          name: chinese_util-php7.4-x86.dll
+
+  build-windows-x64:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: install php
+        run: |
+          .\.github/workflows/bin/install-php7.4-win-x64.ps1
+
+      - name: build and install library with php
+        run: |
+          $phpDevPath=$([environment]::GetEnvironmentvariable("PHP_DEV_PATH", "Machine"))
+          cmake -H"." -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_GENERATOR_PLATFORM=x64 -DWITH_PHP=1 -DPHP_INCLUDE_DIR="$phpDevPath\include" -DPHP_LIB_DIR="$phpDevPath\lib"
+          cmake --build build --target install --config Release -j
+
+      - name: php test
+        run: |
+          [environment]::SetEnvironmentvariable("PATH", $([environment]::GetEnvironmentvariable("PATH", "Machine")))
+          cd phptest
+          composer update
+          phpunit
+          cd ../
+
+      - name: Deploy Windows x64 release
+        uses: WebFreak001/upload-asset@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: build/Release/chinese_util.dll
+          mime: application/octet-stream
+          name: chinese_util-php7.4-x64.dll
+
+  build-ubuntu:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: install php
+        run: sudo .github/workflows/bin/install-php7.4.sh
+
+      - name: build and install library with php
+        run: |
+          rm -rf build
+          cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Release -DWITH_PHP=1
+          sudo cmake --build build --target install --config Release -j
+
+      - name: php test
+        run: |
+          cd phptest
+          composer update
+          vendor/bin/phpunit
+          cd ../
+
+      - name: Deploy Linux PHP 7.4 release
+        uses: WebFreak001/upload-asset@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: build/libchinese_util.so
+          mime: application/octet-stream
+          name: libchinese_util-php7.4.so
+
+      - name: install swoole
+        run: sudo .github/workflows/bin/install-swoole4.5.sh
+
+      - name: build and install library with swoole
+        run: |
+          cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Release -DWITH_PHP=1 -DWITH_SWOOLE=1
+          sudo cmake --build build --target install --config Release -j
+
+      - name: swoole test
+        run: |
+          cd phptest
+          composer update
+          vendor/bin/phpunit
+
+      - name: Deploy Linux Swoole 4.5 release
+        uses: WebFreak001/upload-asset@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: build/libchinese_util.so
+          mime: application/octet-stream
+          name: libchinese_util-swoole4.5.so
+
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: install php
+        run: sudo .github/workflows/bin/install-php7.4-mac.sh
+
+      - name: build and install library with php
+        run: |
+          rm -rf build
+          cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Release -DWITH_PHP=1
+          sudo cmake --build build --target install --config Release -j
+
+      - name: php test
+        run: |
+          cd phptest
+          composer update
+          vendor/bin/phpunit
+          cd ../
+
+      - name: Deploy MacOS PHP 7.4 release
+        uses: WebFreak001/upload-asset@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: build/libchinese_util.dylib
+          mime: application/octet-stream
+          name: libchinese_util-php7.4.dylib
+
+      - name: install swoole
+        run: sudo .github/workflows/bin/install-swoole4.5.sh
+
+      - name: build and install library with swoole
+        run: |
+          cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Release -DWITH_PHP=1 -DWITH_SWOOLE=1
+          sudo cmake --build build --target install --config Release -j
+
+      - name: swoole test
+        run: |
+          cd phptest
+          composer update
+          vendor/bin/phpunit
+
+      - name: Deploy MacOS Swoole 4.5 release
+        uses: WebFreak001/upload-asset@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: build/libchinese_util.dylib
+          mime: application/octet-stream
+          name: libchinese_util-swoole4.5.dylib

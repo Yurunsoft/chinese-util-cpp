@@ -1,0 +1,7 @@
+#!/bin/bash
+
+__DIR__=$(cd `dirname $0`; pwd)
+
+cd $__DIR__/../
+
+./bin/build-test && CTEST_OUTPUT_ON_FAILURE=1 cmake --build build/test --target test
