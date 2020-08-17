@@ -16,6 +16,10 @@ PHP_FUNCTION(init_chinese_dict) {
     Z_PARAM_STRING(chars_data_file, chars_data_file_len)
     Z_PARAM_STRING(pinyin_data_file, pinyin_data_file_len)
     ZEND_PARSE_PARAMETERS_END_EX(RETURN_FALSE);
+    if(dict)
+    {
+        delete dict;
+    }
     dict = new Dict;
     dict->LoadCharacterData(chars_data_file);
     dict->LoadPinyinData(pinyin_data_file);

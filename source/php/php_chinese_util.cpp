@@ -44,8 +44,14 @@ const zend_function_entry ext_functions[] = {
 };
 // clang-format on
 
+bool inited = false;
+
 extern "C" {
 PUBLIC_API void init_chinese_util() {
-    zend_register_functions(NULL, ext_functions, NULL, MODULE_PERSISTENT);
+    if(!inited)
+    {
+        zend_register_functions(NULL, ext_functions, NULL, MODULE_PERSISTENT);
+        inited = true;
+    }
 }
 }
