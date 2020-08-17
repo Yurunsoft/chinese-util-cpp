@@ -48,8 +48,7 @@ bool inited = false;
 
 extern "C" {
 PUBLIC_API void init_chinese_util() {
-    if(!inited)
-    {
+    if (!inited) {
         zend_register_functions(NULL, ext_functions, NULL, MODULE_PERSISTENT);
         inited = true;
     }
