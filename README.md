@@ -5,6 +5,7 @@
 [![Actions Status](https://github.com/Yurunsoft/chinese-util-cpp/workflows/Ubuntu/badge.svg)](https://github.com/Yurunsoft/chinese-util-cpp/actions)
 [![Actions Status](https://github.com/Yurunsoft/chinese-util-cpp/workflows/Style/badge.svg)](https://github.com/Yurunsoft/chinese-util-cpp/actions)
 [![Actions Status](https://github.com/Yurunsoft/chinese-util-cpp/workflows/Install/badge.svg)](https://github.com/Yurunsoft/chinese-util-cpp/actions)
+[![codecov](https://codecov.io/gh/Yurunsoft/chinese-util-cpp/branch/master/graph/badge.svg)](https://codecov.io/gh/Yurunsoft/chinese-util-cpp)
 
 ## 介绍
 
