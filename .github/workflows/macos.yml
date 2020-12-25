@@ -10,11 +10,12 @@ jobs:
     runs-on: macos-latest
 
     strategy:
+      fail-fast: false
       matrix:
         php:
           [
             7.4,
-            8.0
+            "8.0"
           ]
 
     env:
