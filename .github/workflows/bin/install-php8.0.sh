@@ -4,7 +4,7 @@ add-apt-repository ppa:ondrej/php -y -u
 
 apt-get update
 
-apt install -y build-essential php8.0-cli php8.0-bcmath php8.0-curl php8.0-dev hp8.0-mbstring php8.0-zip
+apt install -y php8.0-cli php8.0-bcmath php8.0-curl php8.0-dev hp8.0-mbstring php8.0-zip
 
 php -v
 php -m
