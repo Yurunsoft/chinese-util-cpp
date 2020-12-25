@@ -3,6 +3,7 @@
 #include "php/php_dict.h"
 #include "php_chinese_util.h"
 #if WITH_SWOOLE
+#    include <time.h>
 #    include <swoole_coroutine.h>
 using namespace swoole;
 #endif
