@@ -1,5 +1,5 @@
 #!/bin/bash
-PHP_VERSION="7.4"
+PHP_VERSION="8.0"
 brew install php@$PHP_VERSION;
 brew link --force --overwrite php@$PHP_VERSION
 

@@ -15,6 +15,17 @@ jobs:
   build:
     runs-on: macos-latest
 
+    strategy:
+      matrix:
+        php:
+          [
+            7.4,
+            8.0
+          ]
+
+    env:
+      PHP_VERSION: ${{ matrix.php }}
+
     steps:
       - uses: actions/checkout@v1
 
@@ -28,7 +39,7 @@ jobs:
         run: cmake --build build/test --target test
 
       - name: install php
-        run: sudo .github/workflows/bin/install-php7.4-mac.sh
+        run: .github/workflows/bin/install-php$PHP_VERSION-mac.sh
 
       - name: build and install library with php
         run: |
