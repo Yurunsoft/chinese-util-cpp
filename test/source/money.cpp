@@ -22,6 +22,13 @@ TEST_CASE("MoneyToChinese") {
     // 小数
     CHECK_EQ("叁圆壹角肆分壹厘伍毫", Money::ToChinese(3.1415));
     CHECK_EQ("叁圆壹角肆分壹厘伍毫", Money::ToChinese("3.1415"));
+
+    CHECK_EQ("零圆", Money::ToChinese(0));
+    CHECK_EQ("零圆", Money::ToChinese("0"));
+    CHECK_EQ("零圆", Money::ToChinese("0.0"));
+
+    CHECK_EQ("壹拾贰圆", Money::ToChinese("12.0"));
+    CHECK_EQ("壹拾贰圆", Money::ToChinese("12.00"));
 }
 
 TEST_CASE("MoneyToNumber") {
@@ -29,9 +36,9 @@ TEST_CASE("MoneyToNumber") {
     CHECK_EQ(5, Money::ToNumber<long>("伍圆"));
     CHECK_EQ(12, Money::ToNumber<long>("壹拾贰圆"));
 
-    // // 负数
+    // 负数
     CHECK_EQ(-5, Money::ToNumber<long>("负伍圆"));
 
-    // // 小数
+    // 小数
     CHECK_EQ(3.1415, Money::ToNumber<double>("叁圆壹角肆分壹厘伍毫"));
 }

@@ -87,6 +87,9 @@ static inline string parse_integer(const string number) {
                 }
             }
         }
+        if (has0) {
+            item_result += MONEY_NUMBER_MAP_BY_NUMBER['0'];
+        }
         if (0 == item_result.length()) {
             if (stl_isset_index(MONEY_NUMBER_UNIT_MAP, index)) {
                 if (index > 3) {
@@ -122,7 +125,8 @@ static inline string parse_decimal(const string number) {
         }
     }
     auto ltrim_result = string_ltrim(result, MONEY_NUMBER_MAP_BY_NUMBER['0']);
-    return ltrim_result == result ? ltrim_result : (MONEY_NUMBER_MAP_BY_NUMBER['0'] + ltrim_result);
+    printf("result=%s, ltrim_result=%s\n", result.c_str(), ltrim_result.c_str());
+    return ltrim_result.empty() || ltrim_result == result ? ltrim_result : (MONEY_NUMBER_MAP_BY_NUMBER['0'] + ltrim_result);
 }
 string Money::ToChinese(const string text) {
     if (!is_digital(text)) {

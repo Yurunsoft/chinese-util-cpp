@@ -16,7 +16,7 @@ TEST_CASE("NumberToChinese") {
     CHECK_EQ("五", Number::ToChinese(5));
     CHECK_EQ("一十二", Number::ToChinese(12));
 
-    // // 过滤一十二的一
+    // 过滤一十二的一
     CHECK_EQ("五", Number::ToChinese(5, true));
     CHECK_EQ("十二", Number::ToChinese(12, true));
 
