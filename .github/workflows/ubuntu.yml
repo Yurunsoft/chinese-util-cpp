@@ -41,6 +41,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "${{ matrix.php }}"
+          coverage: none
+        run: php -v && php -m
 
       - name: build and install library with php
         run: |
