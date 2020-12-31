@@ -90,7 +90,7 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: install php
-        run: sudo .github/workflows/bin/install-php7.4.sh
+        run: sudo .github/workflows/bin/install-php$PHP_VERSION.sh
 
       - name: build and install library with php
         run: |
@@ -105,14 +105,14 @@ jobs:
           vendor/bin/phpunit
           cd ../
 
-      - name: Deploy Linux PHP 7.4 release
+      - name: Deploy Linux PHP release
         uses: WebFreak001/upload-asset@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           file: build/libchinese_util.so
           mime: application/octet-stream
-          name: libchinese_util-php7.4.so
+          name: libchinese_util-php$PHP_VERSION.so
 
       - name: install swoole
         run: sudo .github/workflows/bin/install-swoole4.5.sh
@@ -156,7 +156,7 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: install php
-        run: sudo .github/workflows/bin/install-php7.4-mac.sh
+        run: sudo .github/workflows/bin/install-php$PHP_VERSION-mac.sh
 
       - name: build and install library with php
         run: |
@@ -171,14 +171,14 @@ jobs:
           vendor/bin/phpunit
           cd ../
 
-      - name: Deploy MacOS PHP 7.4 release
+      - name: Deploy MacOS PHP release
         uses: WebFreak001/upload-asset@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           file: build/libchinese_util.dylib
           mime: application/octet-stream
-          name: libchinese_util-php7.4.dylib
+          name: libchinese_util-php$PHP_VERSION.dylib
 
       - name: install swoole
         run: sudo .github/workflows/bin/install-swoole4.5.sh
