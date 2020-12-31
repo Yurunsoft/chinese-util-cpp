@@ -94,7 +94,6 @@ jobs:
         with:
           php-version: "${{ matrix.php }}"
           coverage: none
-        run: php -v && php -m
 
       - name: build and install library with php
         run: |
@@ -164,7 +163,6 @@ jobs:
         with:
           php-version: "${{ matrix.php }}"
           coverage: none
-        run: php -v && php -m
 
       - name: build and install library with php
         run: |
