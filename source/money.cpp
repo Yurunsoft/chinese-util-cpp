@@ -125,7 +125,6 @@ static inline string parse_decimal(const string number) {
         }
     }
     auto ltrim_result = string_ltrim(result, MONEY_NUMBER_MAP_BY_NUMBER['0']);
-    printf("result=%s, ltrim_result=%s\n", result.c_str(), ltrim_result.c_str());
     return ltrim_result.empty() || ltrim_result == result ? ltrim_result : (MONEY_NUMBER_MAP_BY_NUMBER['0'] + ltrim_result);
 }
 string Money::ToChinese(const string text) {
