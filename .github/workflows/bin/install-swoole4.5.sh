@@ -5,7 +5,8 @@ apt install cmake
 gcc --version
 cmake --version
 
-swooleVersion="4.5.10"
+# 临时用 v4.5.x 分支
+swooleVersion="4.5.x"
 
 wget -O swoole.tar.gz https://github.com/swoole/swoole-src/archive/v$swooleVersion.tar.gz
 
