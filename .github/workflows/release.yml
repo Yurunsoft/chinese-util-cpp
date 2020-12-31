@@ -112,7 +112,7 @@ jobs:
         with:
           file: build/libchinese_util.so
           mime: application/octet-stream
-          name: libchinese_util-php$PHP_VERSION.so
+          name: libchinese_util-php${PHP_VERSION}.so
 
       - name: install swoole
         run: sudo .github/workflows/bin/install-swoole4.5.sh
@@ -135,7 +135,7 @@ jobs:
         with:
           file: build/libchinese_util.so
           mime: application/octet-stream
-          name: libchinese_util-php$PHP_VERSION-swoole4.5.so
+          name: libchinese_util-php${PHP_VERSION}-swoole4.5.so
 
   build-macos:
     runs-on: macos-latest
@@ -178,7 +178,7 @@ jobs:
         with:
           file: build/libchinese_util.dylib
           mime: application/octet-stream
-          name: libchinese_util-php$PHP_VERSION.dylib
+          name: libchinese_util-php${PHP_VERSION}.dylib
 
       - name: install swoole
         run: sudo .github/workflows/bin/install-swoole4.5.sh
@@ -201,4 +201,4 @@ jobs:
         with:
           file: build/libchinese_util.dylib
           mime: application/octet-stream
-          name: libchinese_util-php$PHP_VERSION-swoole4.5.dylib
+          name: libchinese_util-php${PHP_VERSION}-swoole4.5.dylib
