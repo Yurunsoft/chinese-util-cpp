@@ -38,7 +38,9 @@ jobs:
         run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 
       - name: install php
-        run: sudo .github/workflows/bin/install-php$PHP_VERSION.sh
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "${{ matrix.php }}"
 
       - name: build and install library with php
         run: |

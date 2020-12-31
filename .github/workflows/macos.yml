@@ -34,7 +34,9 @@ jobs:
         run: cmake --build build/test --target test
 
       - name: install php
-        run: .github/workflows/bin/install-php$PHP_VERSION-mac.sh
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "${{ matrix.php }}"
 
       - name: build and install library with php
         run: |
