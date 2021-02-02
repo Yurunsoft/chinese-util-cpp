@@ -14,7 +14,7 @@ using namespace std;
 extern unordered_map<char, string> MONEY_NUMBER_MAP_BY_NUMBER;
 extern unordered_map<string, char> MONEY_NUMBER_MAP_BY_CHARACTER;
 extern array<string, 5> MONEY_NUMBER_UNIT_MAP;
-extern array<string, 5> MONEY_UNIT_MAP;
+extern array<vector<string>, 5> MONEY_UNIT_MAP;
 
 namespace chinese_util {
     class Money {
@@ -26,7 +26,13 @@ namespace chinese_util {
             split_character_utf8(text, characters);
             T number = 0, part_number = 0, last_num = 0, decimal = 0, t_number = 0;
             short pom = 1;
-            bool is_decimal = (-1 == text.find(MONEY_UNIT_MAP[0]));
+            bool is_decimal = true;
+            for (auto item : MONEY_UNIT_MAP[0]) {
+                if (-1 != text.find(item)) {
+                    is_decimal = false;
+                    break;
+                }
+            }
             char last_key = -1;
             int key;
             for (size_t i = 0; i < characters.size(); ++i) {
@@ -38,7 +44,13 @@ namespace chinese_util {
                 key = stl_isset(MONEY_NUMBER_MAP_BY_CHARACTER, character) ? (MONEY_NUMBER_MAP_BY_CHARACTER[character] - '0') : -1;
                 if (is_decimal) {
                     ++i;
-                    auto unit_key = array_search(MONEY_UNIT_MAP, characters[i]);
+                    int unit_key = -1;
+                    for (int j = 0; j < MONEY_UNIT_MAP.size(); ++j) {
+                        if (-1 != vector_search(MONEY_UNIT_MAP[j], characters[i])) {
+                            unit_key = j;
+                            break;
+                        }
+                    }
                     if (-1 == unit_key) {
                         --i;
                         decimal = decimal * 10 + key;
@@ -48,7 +60,12 @@ namespace chinese_util {
                 } else if (-1 == key) {
                     key = array_search(MONEY_NUMBER_UNIT_MAP, character);
                     if (-1 == key) {
-                        key = array_search(MONEY_UNIT_MAP, character);
+                        for (int j = 0; j < MONEY_UNIT_MAP.size(); ++j) {
+                            if (-1 != vector_search(MONEY_UNIT_MAP[j], character)) {
+                                key = j;
+                                break;
+                            }
+                        }
                         if (-1 != key) {
                             is_decimal = true;
                             continue;

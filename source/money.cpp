@@ -37,12 +37,12 @@ array<string, 5> MONEY_NUMBER_UNIT_MAP = {
     "万",
     "亿"};
 
-array<string, 5> MONEY_UNIT_MAP = {
-    "圆",
-    "角",
-    "分",
-    "厘",
-    "毫"};
+array<vector<string>, 5> MONEY_UNIT_MAP = {
+    vector<string>{"圆", "元"},
+    vector<string>{"角"},
+    vector<string>{"分"},
+    vector<string>{"厘"},
+    vector<string>{"毫"}};
 
 static inline string parse_integer(const string number) {
     const auto number_length = number.length();
@@ -108,7 +108,7 @@ static inline string parse_integer(const string number) {
         }
     }
     if (result.length() > 0) {
-        result += MONEY_UNIT_MAP[0];
+        result += MONEY_UNIT_MAP[0][0];
     }
     return result;
 }
@@ -121,7 +121,7 @@ static inline string parse_decimal(const string number) {
     for (size_t i = 0; i < number.size(); ++i) {
         result += MONEY_NUMBER_MAP_BY_NUMBER[number[i]];
         if ('0' != number[i] && stl_isset_index(MONEY_UNIT_MAP, i + 1)) {
-            result += MONEY_UNIT_MAP[i + 1];
+            result += MONEY_UNIT_MAP[i + 1][0];
         }
     }
     auto ltrim_result = string_ltrim(result, MONEY_NUMBER_MAP_BY_NUMBER['0']);

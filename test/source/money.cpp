@@ -34,11 +34,15 @@ TEST_CASE("MoneyToChinese") {
 TEST_CASE("MoneyToNumber") {
     // 数字
     CHECK_EQ(5, Money::ToNumber<long>("伍圆"));
+    CHECK_EQ(5, Money::ToNumber<long>("伍元"));
     CHECK_EQ(12, Money::ToNumber<long>("壹拾贰圆"));
+    CHECK_EQ(12, Money::ToNumber<long>("壹拾贰元"));
 
     // 负数
     CHECK_EQ(-5, Money::ToNumber<long>("负伍圆"));
+    CHECK_EQ(-5, Money::ToNumber<long>("负伍元"));
 
     // 小数
     CHECK_EQ(3.1415, Money::ToNumber<double>("叁圆壹角肆分壹厘伍毫"));
+    CHECK_EQ(3.1415, Money::ToNumber<double>("叁元壹角肆分壹厘伍毫"));
 }
