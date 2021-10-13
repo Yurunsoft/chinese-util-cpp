@@ -160,14 +160,16 @@ static inline string string_ltrim(const string text, const string trim_chars) {
     vector<string> trims;
     split_character_utf8(trim_chars, trims);
     bool has_trim_chars = false;
+    size_t length = 0;
     for (size_t i = 0; i < text_splits.size(); ++i) {
         switch (vector_search(trims, text_splits[i])) {
             case 0:
                 has_trim_chars = true;
                 break;
             case -1:
-                return text.substr(i);
+                return text.substr(length);
         }
+        length += text_splits[i].length();
     }
     if (has_trim_chars) {
         return "";
@@ -180,10 +182,12 @@ static inline string string_rtrim(const string text, const string trim_chars) {
     split_character_utf8(text, text_splits);
     vector<string> trims;
     split_character_utf8(trim_chars, trims);
+    size_t length = 0;
     for (size_t i = text_splits.size() - 1; i >= 0; --i) {
         if (-1 == vector_search(trims, text_splits[i])) {
-            return text.substr(0, i + 1);
+            return text.substr(0, text.length() - length);
         }
+        length += text_splits[i].length();
     }
     return text;
 }

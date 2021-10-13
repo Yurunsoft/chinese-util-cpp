@@ -108,7 +108,10 @@ static inline string parse_integer(const string number) {
         }
     }
     if (result.length() > 0) {
-        result += MONEY_UNIT_MAP[0][0];
+        result = string_rtrim(result, MONEY_NUMBER_MAP_BY_NUMBER['0']);
+        if (result.length() > 0) {
+            result += MONEY_UNIT_MAP[0][0];
+        }
     }
     return result;
 }
@@ -148,7 +151,14 @@ string Money::ToChinese(const string text) {
         pom = MONEY_NUMBER_MAP_BY_NUMBER['-'];
         integer_str = integer_str.substr(1);
     }
-    return pom + parse_integer(integer_str) + parse_decimal(decimal_str);
+
+    if (0 != tmp_integer) {
+        return pom + parse_integer(integer_str) + parse_decimal(decimal_str);
+    } else if (0 == atoi(decimal_str.c_str())) {
+        return MONEY_NUMBER_MAP_BY_NUMBER['0'] + MONEY_UNIT_MAP[0][0];
+    } else {
+        return pom + parse_decimal(decimal_str);
+    }
 }
 
 string Money::ToChinese(const char* text) {
