@@ -6,9 +6,9 @@ gcc --version
 cmake --version
 
 # 临时用 v4.5.x 分支
-swooleVersion="4.5.x"
+swooleVersion="4.5.11"
 
-wget -O swoole.tar.gz https://github.com/swoole/swoole-src/archive/v$swooleVersion.tar.gz
+wget -O swoole.tar.gz https://github.com/swoole/swoole-src/archive/refs/tags/v$swooleVersion.tar.gz
 
 swooleDir="swoole-src-${swooleVersion}"
 
